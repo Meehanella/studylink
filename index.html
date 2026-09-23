@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyLink | PWC Tutoring Portal</title>
+    <!-- Supabase JS Library CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #800000, #4a0000);
             color: #ffffff;
-            height: 100vh;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
         .bg-animation {
             position: fixed;
@@ -35,37 +36,140 @@
         }
         .logo { font-size: 22px; font-weight: bold; color: #ffcc00; }
         .container {
-            max-width: 800px;
-            margin: 40px auto;
+            max-width: 500px;
+            margin: 50px auto;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
-        h2 { color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 8px; }
+        h2 { color: #ffcc00; text-align: center; border-bottom: 2px solid #ffcc00; padding-bottom: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #ffcc00; font-weight: bold; }
+        input, select {
+            width: 100%; padding: 10px; border-radius: 5px; border: none;
+            box-sizing: border-box; background: rgba(255,255,255,0.9); color: #333;
+        }
         .btn {
-            background-color: #ffcc00;
-            color: #600000;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            background-color: #ffcc00; color: #600000; font-weight: bold;
+            width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer;
+            margin-top: 10px; transition: 0.3s;
         }
         .btn:hover { background-color: #e6b800; }
+        .hidden { display: none; }
+        .dashboard { max-width: 800px; }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
     <header>
         <div class="logo">StudyLink - PWC</div>
-        <div>Dashboard | Browse Tutors | Profile</div>
+        <div id="user-info" class="hidden">Welcome, <span id="username-display"></span></div>
     </header>
-    <div class="container">
-        <h2>Student Learning Dashboard</h2>
-        <p>Welcome, PWC Student! Manage your tutoring appointments here.</p>
-        <button class="btn">Book Tutoring Session</button>
+
+    <!-- AUTH SECTION (Login / Sign Up) -->
+    <div id="auth-container" class="container">
+        <h2>StudyLink PWC Portal</h2>
+        <div class="form-group">
+            <label>Email (@pwc.edu.ph)</label>
+            <input type="email" id="email" placeholder="student@pwc.edu.ph">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <div id="signup-fields" class="hidden">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="Juan Dela Cruz">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select id="role">
+                    <option value="STUDENT">Student</option>
+                    <option value="TUTOR">Tutor</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn" id="main-btn" onclick="handleAuth()">Log In</button>
+        <p style="text-align: center; margin-top: 15px; cursor: pointer; color: #ffcc00;" onclick="toggleMode()">
+            <span id="toggle-text">Don't have an account? Sign Up</span>
+        </p>
     </div>
+
+    <!-- DASHBOARD SECTION (Hidden until login) -->
+    <div id="dashboard-container" class="container dashboard hidden">
+        <h2 id="dash-title">Student Dashboard</h2>
+        <p>You are successfully logged into StudyLink connected to Supabase!</p>
+        <button class="btn" style="background-color: #d9534f; color: white;" onclick="logout()">Log Out</button>
+    </div>
+
+    <script>
+        // REPLACE WITH YOUR ACTUAL SUPABASE URL AND ANON KEY
+        // YOUR ACTUAL SUPABASE CONFIGURATION
+        const SUPABASE_URL = 'https://qihryxvenaozhaqswzxy.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHJ5eHZlbmFvemhhcXN3enh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTY2MTEsImV4cCI6MjEwNTczMjYxMX0.YgPQOuuB6X9L-JN0XYye6Iqs2VLQhHSDF1-hZwG0Zek';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let isSignup = false;
+
+        function toggleMode() {
+            isSignup = !isSignup;
+            document.getElementById('signup-fields').classList.toggle('hidden', !isSignup);
+            document.getElementById('main-btn').innerText = isSignup ? 'Sign Up' : 'Log In';
+            document.getElementById('toggle-text').innerText = isSignup ? 'Already have an account? Log In' : "Don't have an account? Sign Up";
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email.endsWith('@pwc.edu.ph')) {
+                alert('Please use a valid PWC email address (@pwc.edu.ph)');
+                return;
+            }
+
+            if (isSignup) {
+                const name = document.getElementById('name').value;
+                const role = document.getElementById('role').value;
+
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .insert([{ name, email, password, role }]);
+
+                if (error) {
+                    alert('Signup Error: ' + error.message);
+                } else {
+                    alert('Account created successfully! You can now log in.');
+                    toggleMode();
+                }
+            } else {
+                // Login query check against Supabase users table
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('password', password)
+                    .single();
+
+                if (error || !data) {
+                    alert('Invalid email or password!');
+                } else {
+                    alert('Login successful!');
+                    document.getElementById('auth-container').classList.add('hidden');
+                    document.getElementById('dashboard-container').classList.remove('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+                    document.getElementById('username-display').innerText = data.name;
+                    document.getElementById('dash-title').innerText = `${data.role} Dashboard: ${data.name}`;
+                }
+            }
+        }
+
+        function logout() {
+            location.reload();
+        }
+    </script>
 </body>
 </html>
