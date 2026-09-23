@@ -17,13 +17,12 @@
             margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light-bg); color: #333; min-height: 100vh;
         }
-        /* Top Navigation Bar */
         header {
             background-color: #ffffff; border-bottom: 1px solid #e0dcd0;
             padding: 12px 40px; display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-title { font-size: 22px; font-weight: bold; color: var(--maroon); }
         .logo-title span { color: #d4a017; }
         .logo-sub { font-size: 9px; text-transform: uppercase; color: #555; letter-spacing: 0.5px; }
@@ -32,57 +31,41 @@
         .nav-links a { text-decoration: none; color: #444; font-weight: 600; font-size: 14px; cursor: pointer; }
         .nav-links a:hover, .nav-links a.active { color: var(--maroon); border-bottom: 2px solid var(--maroon); padding-bottom: 2px; }
 
-        .search-bar-top {
-            display: flex; align-items: center; background: #f2efe9; border-radius: 20px;
-            padding: 6px 15px; width: 280px; border: 1px solid #e2ded4;
-        }
-        .search-bar-top input { border: none; background: transparent; outline: none; margin-left: 8px; font-size: 13px; width: 100%; }
-
-        .auth-buttons { display: flex; gap: 10px; }
+        .auth-buttons { display: flex; gap: 10px; align-items: center; }
         .btn-login { background: transparent; border: 1px solid var(--maroon); color: var(--maroon); padding: 6px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
         .btn-signup { background: var(--maroon); border: none; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-        .btn-login:hover { background: rgba(96,0,0,0.05); }
-        .btn-signup:hover { background: var(--dark-maroon); }
+        .btn-logout { background: #d9534f; border: none; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
 
-        /* Hero Banner Section with Campus Background */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 20px 40px 40px 40px; }
+        
         .hero-banner {
-            position: relative; background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80') center/cover;
-            padding: 50px 60px; margin: 20px 40px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80') center/cover;
+            padding: 40px 50px; margin-bottom: 30px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
             border: 1px solid #e8e3d5; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
-        .hero-text h1 { font-size: 42px; color: var(--maroon); margin: 0 0 10px 0; font-family: Georgia, serif; }
-        .hero-text p { font-size: 16px; color: #555; margin-bottom: 20px; }
+        .hero-text h1 { font-size: 36px; color: var(--maroon); margin: 0 0 10px 0; font-family: Georgia, serif; }
+        .hero-text p { font-size: 15px; color: #555; margin-bottom: 20px; }
+        
         .btn-primary-maroon { background: var(--maroon); color: white; padding: 10px 24px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
         .btn-primary-maroon:hover { background: var(--dark-maroon); }
 
-        /* Main Content Grid */
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 40px 20px; }
         .section-title { font-size: 20px; font-weight: bold; color: #222; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .section-title a { font-size: 14px; color: var(--maroon); text-decoration: none; }
-
-        /* Subjects Grid */
-        .subjects-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 40px; }
-        .subject-card {
-            background: white; border: 1px solid #e8e3d5; border-radius: 12px; padding: 20px 15px; text-align: center;
-            cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-        }
-        .subject-card:hover { transform: translateY(-3px); border-color: var(--maroon); }
-        .subject-icon { width: 40px; height: 40px; background: #fdf5e6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; color: var(--maroon); font-weight: bold; }
-
-        /* Tutors Grid */
-        .tutors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .tutor-card { background: white; border: 1px solid #e8e3d5; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; }
-        .avatar-circle { width: 60px; height: 60px; background: #ddd; border-radius: 50%; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; font-size: 20px; }
-        .badge-tag { display: inline-block; background: #fdf5e6; color: var(--maroon); padding: 4px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; margin: 3px 3px 3px 0; }
         
-        /* Modal Overlay for Login/Signup */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: white; border: 1px solid #e8e3d5; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .card h3 { color: var(--maroon); margin-top: 0; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { color: var(--maroon); background: #fdf5e6; }
+
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
             display: flex; align-items: center; justify-content: center; z-index: 1000;
         }
         .auth-modal {
             background: white; width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border-top: 6px solid var(--maroon); text-align: left; position: relative;
+            border-top: 6px solid var(--maroon); text-align: left;
         }
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd; }
         .auth-tab { flex: 1; text-align: center; padding: 10px; font-weight: bold; cursor: pointer; color: #777; }
@@ -98,88 +81,113 @@
 
     <!-- TOP NAVIGATION BAR -->
     <header>
-        <div class="logo-area">
+        <div class="logo-area" onclick="location.reload()">
             <div>
                 <div class="logo-title">PW<span>Link</span></div>
                 <div class="logo-sub">Philippine Women's College of Davao</div>
             </div>
         </div>
-        <div class="nav-links">
-            <a onclick="switchPageView('home')" class="active">Home</a>
-            <a onclick="switchPageView('tutors')">Find a Tutor</a>
-            <a onclick="switchPageView('subjects')">Subjects</a>
-            <a onclick="alert('PWC Tutoring System - Built for students!')">How It Works</a>
-            <a onclick="alert('PWLink: Created by PWC Students[cite: 1].')">About</a>
+        <div class="nav-links" id="nav-menu-links">
+            <a onclick="switchTab('home')" class="active" id="nav-home">Home</a>
+            <a onclick="switchTab('tutors')" id="nav-tutors">Find a Tutor</a>
+            <a onclick="switchTab('subjects')" id="nav-subjects">Subjects</a>
+            <a onclick="switchTab('admin')" id="nav-admin" class="hidden" style="color: var(--maroon); font-weight: bold;">Admin Panel</a>
         </div>
-        <div class="search-bar-top">
-            <span>🔍</span>
-            <input type="text" placeholder="Search tutors, subjects...">
-        </div>
-        <div class="auth-buttons" id="header-auth-buttons">
+        <div class="auth-buttons" id="header-auth-area">
             <button class="btn-login" onclick="openAuthModal('login')">Login</button>
             <button class="btn-signup" onclick="openAuthModal('signup')">Sign Up</button>
         </div>
-        <div id="header-user-badge" class="hidden" style="font-weight: bold; color: var(--maroon);"></div>
     </header>
 
-    <!-- MAIN VIEW CONTAINER -->
-    <div class="main-container" id="main-content-area">
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
         
         <!-- HERO BANNER -->
         <div class="hero-banner">
-            <div class="hero-text" id="hero-greeting-box">
+            <div class="hero-text" id="hero-banner-content">
                 <h1>Learn Further with PWLink</h1>
-                <p>Your trusted tutoring platform, built by PWC students, for PWC students[cite: 1].</p>
-                <button class="btn-primary-maroon" onclick="switchPageView('tutors')">Find a Tutor</button>
+                <p>Your trusted tutoring platform, built by PWC students, for PWC students.</p>
+                <button class="btn-primary-maroon" onclick="openAuthModal('login')">Get Started</button>
             </div>
             <div style="font-style: italic; color: var(--maroon); font-weight: bold; font-size: 18px; text-align: right; max-width: 200px; font-family: Georgia, serif;">
                 "Same Students. Brighter Futures. ♡"
             </div>
         </div>
 
-        <!-- BROWSE SUBJECTS SECTION -->
-        <div class="section-title">
-            Browse Subjects <a onclick="switchPageView('subjects')">View All Subjects →</a>
+        <!-- TAB: HOME / DASHBOARD -->
+        <div id="tab-home" class="tab-content">
+            <div id="guest-welcome-view">
+                <div class="section-title">Browse Subject Categories</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                    <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('tutors')">
+                        <div style="font-size: 28px; margin-bottom: 8px;">💻</div>
+                        <strong>IT & Computer Studies</strong>
+                    </div>
+                    <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('tutors')">
+                        <div style="font-size: 28px; margin-bottom: 8px;">📊</div>
+                        <strong>Accountancy</strong>
+                    </div>
+                    <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('tutors')">
+                        <div style="font-size: 28px; margin-bottom: 8px;">💼</div>
+                        <strong>Business Management</strong>
+                    </div>
+                    <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('tutors')">
+                        <div style="font-size: 28px; margin-bottom: 8px;">🧮</div>
+                        <strong>Mathematics</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DYNAMIC USER DASHBOARD -->
+            <div id="user-role-dashboard" class="hidden"></div>
         </div>
-        <div class="subjects-row">
-            <div class="subject-card" onclick="switchPageView('tutors')">
-                <div class="subject-icon">📊</div>
-                <strong>Accountancy</strong>
-                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Financial, Managerial</p>
-            </div>
-            <div class="subject-card" onclick="switchPageView('tutors')">
-                <div class="subject-icon">💼</div>
-                <strong>Business</strong>
-                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Management, Marketing</p>
-            </div>
-            <div class="subject-card" onclick="switchPageView('tutors')">
-                <div class="subject-icon">📈</div>
-                <strong>Economics</strong>
-                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Micro & Macro</p>
-            </div>
-            <div class="subject-card" onclick="switchPageView('tutors')">
-                <div class="subject-icon">💻</div>
-                <strong>IT & CS</strong>
-                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Java, Web Development[cite: 1]</p>
-            </div>
-            <div class="subject-card" onclick="switchPageView('tutors')">
-                <div class="subject-icon">🧮</div>
-                <strong>Mathematics</strong>
-                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Calculus, Statistics</p>
-            </div>
-            <div class="subject-card" onclick="switchPageView('tutors')">
-                <div class="subject-icon">📚</div>
-                <strong>English</strong>
-                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Purposive Comm</p>
+
+        <!-- TAB: TUTORS -->
+        <div id="tab-tutors" class="tab-content hidden">
+            <div class="section-title">Available PWC Peer Tutors</div>
+            <div class="dashboard-grid" id="tutors-grid-container">
+                <p>Loading available tutors...</p>
             </div>
         </div>
 
-        <!-- FEATURED TUTORS SECTION -->
-        <div class="section-title">
-            Featured PWC Tutors <a onclick="switchPageView('tutors')">View All Tutors →</a>
+        <!-- TAB: SUBJECTS -->
+        <div id="tab-subjects" class="tab-content hidden">
+            <div class="section-title">PWC Course Subjects</div>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Information Technology</h3>
+                    <p>Java Programming, Web Systems, Networking, Data Structures.</p>
+                </div>
+                <div class="card">
+                    <h3>Accountancy & Business</h3>
+                    <p>Financial Accounting, Taxation, Marketing Management, Business Law.</p>
+                </div>
+                <div class="card">
+                    <h3>General Education</h3>
+                    <p>Purposive Communication, Art Appreciation, Mathematics in the Modern World.</p>
+                </div>
+            </div>
         </div>
-        <div class="tutors-grid" id="featured-tutors-container">
-            <p>Loading featured tutors from database...</p>
+
+        <!-- TAB: ADMIN PANEL (Dedicated View) -->
+        <div id="tab-admin" class="tab-content hidden">
+            <div class="section-title">Admin Management Dashboard</div>
+            <p>Full system control panel to oversee user accounts, roles, and profile statuses.</p>
+            <div class="card" style="overflow-x: auto; margin-top: 20px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Management Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-users-table">
+                        <tr><td colspan="4">Loading user records from database...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -203,11 +211,10 @@
                     <input type="text" id="auth-name" placeholder="Juan Dela Cruz">
                 </div>
                 <div class="form-group">
-                    <label>Role</label>
+                    <label>I am registering as a</label>
                     <select id="auth-role">
                         <option value="STUDENT">Student</option>
                         <option value="TUTOR">Tutor</option>
-                        <option value="ADMIN">Admin</option>
                     </select>
                 </div>
             </div>
@@ -255,7 +262,7 @@
             const password = document.getElementById('auth-password').value.trim();
 
             if (!email.endsWith('@pwc.edu.ph')) {
-                alert('Please use a valid PWC email (@pwc.edu.ph)[cite: 1].');
+                alert('Please use a valid PWC email address (@pwc.edu.ph).');
                 return;
             }
 
@@ -270,55 +277,121 @@
             } else {
                 const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password).single();
                 if (error || !data) {
-                    alert('Invalid credentials.');
+                    alert('Invalid email or password.');
                 } else {
                     currentUser = data;
                     closeAuthModal();
-                    document.getElementById('header-auth-buttons').classList.add('hidden');
-                    const badge = document.getElementById('header-user-badge');
-                    badge.classList.remove('hidden');
-                    badge.innerText = `Hello, ${data.name} (${data.role})`;
-
-                    document.getElementById('hero-greeting-box').innerHTML = `
-                        <h1>Welcome back, ${data.name}!</h1>
-                        <p>Keep learning, keep growing. Find the right tutor and achieve your goals.</p>
-                    `;
-                    loadTutors();
+                    renderUserSession();
                 }
             }
         }
 
+        function renderUserSession() {
+            const authArea = document.getElementById('header-auth-area');
+            authArea.innerHTML = `
+                <span style="font-weight: bold; color: var(--maroon); font-size: 14px;">${currentUser.name} (${currentUser.role})</span>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            `;
+
+            document.getElementById('hero-banner-content').innerHTML = `
+                <h1>Welcome back, ${currentUser.name}!</h1>
+                <p>Logged in as <strong>${currentUser.role}</strong>. Ready to connect and succeed together.</p>
+            `;
+
+            document.getElementById('guest-welcome-view').classList.add('hidden');
+            const roleDashboard = document.getElementById('user-role-dashboard');
+            roleDashboard.classList.remove('hidden');
+
+            if (currentUser.role === 'ADMIN') {
+                document.getElementById('nav-admin').classList.remove('hidden');
+                // Automatically route admin directly to their dedicated management tab
+                switchTab('admin');
+                loadAdminUsers();
+            } else if (currentUser.role === 'TUTOR') {
+                roleDashboard.innerHTML = `
+                    <div class="section-title">Tutor Teaching Dashboard</div>
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>My Tutor Profile</h3>
+                            <p><strong>Email:</strong> ${currentUser.email}</p>
+                            <p><strong>Status:</strong> Active & Visible to Students</p>
+                        </div>
+                        <div class="card">
+                            <h3>Incoming Student Requests</h3>
+                            <p style="color: #666;">No pending session bookings right now. Share your profile with classmates!</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                roleDashboard.innerHTML = `
+                    <div class="section-title">Student Learning Dashboard</div>
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>Find a Peer Tutor</h3>
+                            <p>Browse through qualified PWC student tutors ready to help you with your subjects.</p>
+                            <button class="btn-primary-maroon" style="margin-top: 10px;" onclick="switchTab('tutors')">Browse Tutors</button>
+                        </div>
+                        <div class="card">
+                            <h3>My Booked Sessions</h3>
+                            <p style="color: #666;">You have no active tutoring appointments scheduled.</p>
+                        </div>
+                    </div>
+                `;
+            }
+            loadTutors();
+        }
+
+        function switchTab(tabName) {
+            ['home', 'tutors', 'subjects', 'admin'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const navEl = document.getElementById(`nav-${t}`);
+                if (navEl) navEl.classList.remove('active');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeNav) activeNav.classList.add('active');
+        }
+
         async function loadTutors() {
             const { data, error } = await supabaseClient.from('users').select('*').eq('role', 'TUTOR');
-            const container = document.getElementById('featured-tutors-container');
+            const container = document.getElementById('tutors-grid-container');
             if (error || !data || data.length === 0) {
-                container.innerHTML = '<p>No tutors registered yet. Create a tutor account to test!</p>';
+                container.innerHTML = '<p>No tutors registered in the database yet. Try signing up a separate account as a Tutor!</p>';
                 return;
             }
             container.innerHTML = data.map(tutor => `
-                <div class="tutor-card">
-                    <div class="avatar-circle">${tutor.name.charAt(0)}</div>
-                    <h3 style="margin: 0 0 5px 0; color: var(--maroon);">${tutor.name}</h3>
-                    <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">${tutor.email}</p>
-                    <div>
-                        <span class="badge-tag">PWC Peer Tutor</span>
-                        <span class="badge-tag">Verified</span>
-                    </div>
+                <div class="card">
+                    <div style="width: 50px; height: 50px; background: #fdf5e6; color: var(--maroon); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; margin-bottom: 12px;">${tutor.name.charAt(0)}</div>
+                    <h3 style="margin-bottom: 5px;">${tutor.name}</h3>
+                    <p style="font-size: 13px; color: #666; margin: 0 0 15px 0;">${tutor.email}</p>
+                    <span style="background: #fdf5e6; color: var(--maroon); padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold;">PWC Peer Tutor</span>
                     <button class="btn-primary-maroon" style="width: 100%; margin-top: 15px; padding: 8px; font-size: 13px;" onclick="alert('Booking request sent to ${tutor.name}!')">Book Session</button>
                 </div>
             `).join('');
         }
 
-        function switchPageView(view) {
-            if (view === 'tutors') {
-                loadTutors();
-            } else if (view === 'subjects') {
-                alert('Browsing Subject categories: IT, Business, Accountancy, Math, and more[cite: 1]!');
+        async function loadAdminUsers() {
+            const { data, error } = await supabaseClient.from('users').select('*');
+            const tbody = document.getElementById('admin-users-table');
+            if (error || !data) {
+                tbody.innerHTML = '<tr><td colspan="4">Error loading users.</td></tr>';
+                return;
             }
+            tbody.innerHTML = data.map(u => `
+                <tr>
+                    <td><strong>${u.name}</strong></td>
+                    <td>${u.email}</td>
+                    <td><span style="background: #fdf5e6; padding: 3px 8px; border-radius: 6px; color: var(--maroon); font-weight: bold;">${u.role}</span></td>
+                    <td><button class="btn-primary-maroon" style="padding: 4px 12px; font-size: 12px;" onclick="alert('Managing account settings for ${u.name}')">Edit Account</button></td>
+                </tr>
+            `).join('');
         }
 
-        // Initial load of featured tutors
-        loadTutors();
+        function logout() {
+            currentUser = null;
+            location.reload();
+        }
     </script>
 </body>
 </html>
