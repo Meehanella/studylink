@@ -11,178 +11,217 @@
             --dark-maroon: #4a0000;
             --yellow: #ffcc00;
             --cream: #fdfbf7;
+            --light-bg: #f8f5f0;
         }
         body {
             margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--maroon), var(--dark-maroon));
-            color: #ffffff; min-height: 100vh; overflow-x: hidden;
+            background-color: var(--light-bg); color: #333; min-height: 100vh;
         }
-        .bg-animation {
-            position: fixed; top: 0; left: 0; width: 200%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80') repeat-x;
-            opacity: 0.12; z-index: -1; animation: slideBg 60s linear infinite;
-        }
-        @keyframes slideBg { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
+        /* Top Navigation Bar */
         header {
-            background-color: var(--maroon); border-bottom: 4px solid var(--yellow);
-            padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;
+            background-color: #ffffff; border-bottom: 1px solid #e0dcd0;
+            padding: 12px 40px; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo-title { font-size: 24px; font-weight: bold; color: var(--yellow); }
-        .logo-subtitle { font-size: 11px; color: #f0f0f0; text-transform: uppercase; }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-title { font-size: 22px; font-weight: bold; color: var(--maroon); }
+        .logo-title span { color: #d4a017; }
+        .logo-sub { font-size: 9px; text-transform: uppercase; color: #555; letter-spacing: 0.5px; }
+        
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #444; font-weight: 600; font-size: 14px; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: var(--maroon); border-bottom: 2px solid var(--maroon); padding-bottom: 2px; }
 
-        .hero { text-align: center; padding: 40px 20px; max-width: 900px; margin: 0 auto; }
-        .hero h1 { font-size: 40px; color: var(--yellow); margin-bottom: 10px; }
-        
-        .auth-card {
-            max-width: 440px; margin: 20px auto; background: #ffffff; color: #333;
-            padding: 30px; border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-            border-top: 5px solid var(--yellow); text-align: left;
+        .search-bar-top {
+            display: flex; align-items: center; background: #f2efe9; border-radius: 20px;
+            padding: 6px 15px; width: 280px; border: 1px solid #e2ded4;
         }
-        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #eee; }
-        .auth-tab {
-            flex: 1; text-align: center; padding: 12px; font-weight: bold; cursor: pointer;
-            color: #777; border-bottom: 3px solid transparent; transition: 0.3s;
-        }
-        .auth-tab.active { color: var(--maroon); border-bottom-color: var(--maroon); }
+        .search-bar-top input { border: none; background: transparent; outline: none; margin-left: 8px; font-size: 13px; width: 100%; }
 
-        .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; color: var(--maroon); font-weight: 600; font-size: 14px; }
-        input, select {
-            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc;
-            box-sizing: border-box; background: #f9f9f9; font-size: 14px; color: #333;
-        }
-        .role-selector { display: flex; gap: 10px; margin-bottom: 18px; }
-        .role-option {
-            flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 8px;
-            text-align: center; cursor: pointer; font-weight: 600; font-size: 13px; color: #555;
-        }
-        .role-option.selected { border-color: var(--maroon); background: rgba(96,0,0,0.05); color: var(--maroon); }
+        .auth-buttons { display: flex; gap: 10px; }
+        .btn-login { background: transparent; border: 1px solid var(--maroon); color: var(--maroon); padding: 6px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        .btn-signup { background: var(--maroon); border: none; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        .btn-login:hover { background: rgba(96,0,0,0.05); }
+        .btn-signup:hover { background: var(--dark-maroon); }
 
-        .btn-primary {
-            background-color: var(--maroon); color: white; font-weight: bold; width: 100%;
-            padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;
+        /* Hero Banner Section with Campus Background */
+        .hero-banner {
+            position: relative; background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80') center/cover;
+            padding: 50px 60px; margin: 20px 40px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid #e8e3d5; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
-        .btn-primary:hover { background-color: var(--dark-maroon); }
+        .hero-text h1 { font-size: 42px; color: var(--maroon); margin: 0 0 10px 0; font-family: Georgia, serif; }
+        .hero-text p { font-size: 16px; color: #555; margin-bottom: 20px; }
+        .btn-primary-maroon { background: var(--maroon); color: white; padding: 10px 24px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
+        .btn-primary-maroon:hover { background: var(--dark-maroon); }
+
+        /* Main Content Grid */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 40px 20px; }
+        .section-title { font-size: 20px; font-weight: bold; color: #222; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .section-title a { font-size: 14px; color: var(--maroon); text-decoration: none; }
+
+        /* Subjects Grid */
+        .subjects-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .subject-card {
+            background: white; border: 1px solid #e8e3d5; border-radius: 12px; padding: 20px 15px; text-align: center;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .subject-card:hover { transform: translateY(-3px); border-color: var(--maroon); }
+        .subject-icon { width: 40px; height: 40px; background: #fdf5e6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto; color: var(--maroon); font-weight: bold; }
+
+        /* Tutors Grid */
+        .tutors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .tutor-card { background: white; border: 1px solid #e8e3d5; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative; }
+        .avatar-circle { width: 60px; height: 60px; background: #ddd; border-radius: 50%; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; font-size: 20px; }
+        .badge-tag { display: inline-block; background: #fdf5e6; color: var(--maroon); padding: 4px 10px; border-radius: 15px; font-size: 11px; font-weight: bold; margin: 3px 3px 3px 0; }
         
-        /* DASHBOARD LAYOUT */
-        .dashboard-container { max-width: 1000px; margin: 30px auto; padding: 20px; }
-        .nav-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-        .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .nav-btn.active { background: var(--yellow); color: var(--maroon); }
-        
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        .dashboard-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
-        .dashboard-card h3 { color: var(--yellow); margin-top: 0; }
-        
-        .hidden { display: none; }
+        /* Modal Overlay for Login/Signup */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .auth-modal {
+            background: white; width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-top: 6px solid var(--maroon); text-align: left; position: relative;
+        }
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd; }
+        .auth-tab { flex: 1; text-align: center; padding: 10px; font-weight: bold; cursor: pointer; color: #777; }
+        .auth-tab.active { color: var(--maroon); border-bottom: 3px solid var(--maroon); }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 13px; font-weight: bold; color: var(--maroon); margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
+
+    <!-- TOP NAVIGATION BAR -->
     <header>
-        <div class="logo-container">
+        <div class="logo-area">
             <div>
-                <div class="logo-title">PW<span style="color:#fff;">Link</span></div>
-                <div class="logo-subtitle">Tutor. Learn. Succeed Together.</div>
+                <div class="logo-title">PW<span>Link</span></div>
+                <div class="logo-sub">Philippine Women's College of Davao</div>
             </div>
         </div>
-        <div id="user-header-info" class="hidden" style="font-weight: bold; color: var(--yellow);"></div>
+        <div class="nav-links">
+            <a onclick="switchPageView('home')" class="active">Home</a>
+            <a onclick="switchPageView('tutors')">Find a Tutor</a>
+            <a onclick="switchPageView('subjects')">Subjects</a>
+            <a onclick="alert('PWC Tutoring System - Built for students!')">How It Works</a>
+            <a onclick="alert('PWLink: Created by PWC Students[cite: 1].')">About</a>
+        </div>
+        <div class="search-bar-top">
+            <span>🔍</span>
+            <input type="text" placeholder="Search tutors, subjects...">
+        </div>
+        <div class="auth-buttons" id="header-auth-buttons">
+            <button class="btn-login" onclick="openAuthModal('login')">Login</button>
+            <button class="btn-signup" onclick="openAuthModal('signup')">Sign Up</button>
+        </div>
+        <div id="header-user-badge" class="hidden" style="font-weight: bold; color: var(--maroon);"></div>
     </header>
 
-    <!-- AUTH SECTION -->
-    <div id="auth-section" class="hero">
-        <h1>Learn Further with PWLink</h1>
-        <p>Your trusted tutoring platform, built by PWC students, for PWC students[cite: 1].</p>
+    <!-- MAIN VIEW CONTAINER -->
+    <div class="main-container" id="main-content-area">
+        
+        <!-- HERO BANNER -->
+        <div class="hero-banner">
+            <div class="hero-text" id="hero-greeting-box">
+                <h1>Learn Further with PWLink</h1>
+                <p>Your trusted tutoring platform, built by PWC students, for PWC students[cite: 1].</p>
+                <button class="btn-primary-maroon" onclick="switchPageView('tutors')">Find a Tutor</button>
+            </div>
+            <div style="font-style: italic; color: var(--maroon); font-weight: bold; font-size: 18px; text-align: right; max-width: 200px; font-family: Georgia, serif;">
+                "Same Students. Brighter Futures. ♡"
+            </div>
+        </div>
 
-        <div class="auth-card">
+        <!-- BROWSE SUBJECTS SECTION -->
+        <div class="section-title">
+            Browse Subjects <a onclick="switchPageView('subjects')">View All Subjects →</a>
+        </div>
+        <div class="subjects-row">
+            <div class="subject-card" onclick="switchPageView('tutors')">
+                <div class="subject-icon">📊</div>
+                <strong>Accountancy</strong>
+                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Financial, Managerial</p>
+            </div>
+            <div class="subject-card" onclick="switchPageView('tutors')">
+                <div class="subject-icon">💼</div>
+                <strong>Business</strong>
+                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Management, Marketing</p>
+            </div>
+            <div class="subject-card" onclick="switchPageView('tutors')">
+                <div class="subject-icon">📈</div>
+                <strong>Economics</strong>
+                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Micro & Macro</p>
+            </div>
+            <div class="subject-card" onclick="switchPageView('tutors')">
+                <div class="subject-icon">💻</div>
+                <strong>IT & CS</strong>
+                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Java, Web Development[cite: 1]</p>
+            </div>
+            <div class="subject-card" onclick="switchPageView('tutors')">
+                <div class="subject-icon">🧮</div>
+                <strong>Mathematics</strong>
+                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Calculus, Statistics</p>
+            </div>
+            <div class="subject-card" onclick="switchPageView('tutors')">
+                <div class="subject-icon">📚</div>
+                <strong>English</strong>
+                <p style="font-size: 12px; color: #666; margin: 5px 0 0 0;">Purposive Comm</p>
+            </div>
+        </div>
+
+        <!-- FEATURED TUTORS SECTION -->
+        <div class="section-title">
+            Featured PWC Tutors <a onclick="switchPageView('tutors')">View All Tutors →</a>
+        </div>
+        <div class="tutors-grid" id="featured-tutors-container">
+            <p>Loading featured tutors from database...</p>
+        </div>
+
+    </div>
+
+    <!-- AUTHENTICATION MODAL -->
+    <div id="auth-modal-overlay" class="modal-overlay hidden">
+        <div class="auth-modal">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: var(--maroon);" id="modal-title">Log In to PWLink</h3>
+                <span style="cursor: pointer; font-size: 18px; font-weight: bold;" onclick="closeAuthModal()">✕</span>
+            </div>
+            
             <div class="auth-tabs">
-                <div id="tab-login-btn" class="auth-tab active" onclick="switchAuthMode('login')">Log In</div>
-                <div id="tab-signup-btn" class="auth-tab" onclick="switchAuthMode('signup')">Sign Up</div>
+                <div id="modal-tab-login" class="auth-tab active" onclick="setAuthModalMode('login')">Log In</div>
+                <div id="modal-tab-signup" class="auth-tab" onclick="setAuthModalMode('signup')">Sign Up</div>
             </div>
 
-            <div id="signup-fields" class="hidden">
+            <div id="modal-signup-fields" class="hidden">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" id="name" placeholder="Juan Dela Cruz">
+                    <input type="text" id="auth-name" placeholder="Juan Dela Cruz">
                 </div>
                 <div class="form-group">
-                    <label>I am a</label>
-                    <div class="role-selector">
-                        <div id="role-student" class="role-option selected" onclick="setRole('STUDENT')">Student</div>
-                        <div id="role-tutor" class="role-option" onclick="setRole('TUTOR')">Tutor</div>
-                    </div>
+                    <label>Role</label>
+                    <select id="auth-role">
+                        <option value="STUDENT">Student</option>
+                        <option value="TUTOR">Tutor</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>PWC Email (@pwc.edu.ph)</label>
-                <input type="email" id="email" placeholder="student@pwc.edu.ph">
+                <input type="email" id="auth-email" placeholder="student@pwc.edu.ph">
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" id="password" placeholder="••••••••">
+                <input type="password" id="auth-password" placeholder="••••••••">
             </div>
 
-            <button class="btn-primary" id="auth-submit-btn" onclick="handleAuthAction()">Log In</button>
-        </div>
-    </div>
-
-    <!-- STUDENT DASHBOARD SECTION -->
-    <div id="dashboard-section" class="dashboard-container hidden">
-        <h2 id="welcome-msg" style="color: var(--yellow); font-size: 28px;">Welcome back!</h2>
-        
-        <div class="nav-buttons">
-            <button class="nav-btn active" onclick="switchTab('home')">Home & Overview</button>
-            <button class="nav-btn" onclick="switchTab('subjects')">Browse Subjects</button>
-            <button class="nav-btn" onclick="switchTab('tutors')">Browse Tutors</button>
-            <button class="nav-btn" style="background:#d9534f; color:white;" onclick="logout()">Log Out</button>
-        </div>
-
-        <!-- Tab 1: Home -->
-        <div id="tab-home" class="dashboard-card">
-            <h3>Your Learning Dashboard</h3>
-            <p>Access quality tutoring, track your progress, and connect with fellow PWC peers[cite: 1].</p>
-            <div class="card-grid">
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-                    <strong>Upcoming Sessions</strong>
-                    <p style="font-size: 22px; color: var(--yellow); margin: 5px 0;">0 Bookings</p>
-                </div>
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-                    <strong>Completed Hours</strong>
-                    <p style="font-size: 22px; color: var(--yellow); margin: 5px 0;">0 Hours</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 2: Subjects -->
-        <div id="tab-subjects" class="dashboard-card hidden">
-            <h3>Explore Subjects</h3>
-            <p>Select a category to find specialized PWC tutors[cite: 1]:</p>
-            <div class="card-grid">
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-                    <strong>IT & Computer Studies</strong>[cite: 1]
-                    <p style="font-size: 13px; color: #ddd;">Java Programming, Web Development, Systems Analysis[cite: 1]</p>
-                    <button class="btn-primary" style="padding: 8px; font-size: 13px; margin-top: 10px;" onclick="switchTab('tutors')">Find Tutors</button>
-                </div>
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-                    <strong>Business & Management</strong>[cite: 1]
-                    <p style="font-size: 13px; color: #ddd;">Financial Management, Marketing, Ethics[cite: 1]</p>
-                    <button class="btn-primary" style="padding: 8px; font-size: 13px; margin-top: 10px;" onclick="switchTab('tutors')">Find Tutors</button>
-                </div>
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-                    <strong>Mathematics</strong>[cite: 1]
-                    <p style="font-size: 13px; color: #ddd;">Calculus, College Algebra, Statistics[cite: 1]</p>
-                    <button class="btn-primary" style="padding: 8px; font-size: 13px; margin-top: 10px;" onclick="switchTab('tutors')">Find Tutors</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 3: Tutors -->
-        <div id="tab-tutors" class="dashboard-card hidden">
-            <h3>Available PWC Tutors</h3>
-            <div id="tutors-list">Loading registered tutors from Supabase...</div>
+            <button class="btn-primary-maroon" style="width: 100%; padding: 12px;" id="modal-submit-btn" onclick="executeAuth()">Log In</button>
         </div>
     </div>
 
@@ -191,86 +230,95 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHJ5eHZlbmFvemhhcXN3enh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTY2MTEsImV4cCI6MjEwNTczMjYxMX0.YgPQOuuB6X9L-JN0XYye6Iqs2VLQhHSDF1-hZwG0Zek';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let isSignupMode = false;
-        let selectedRole = 'STUDENT';
         let currentUser = null;
+        let isSignupModal = false;
 
-        function switchAuthMode(mode) {
-            isSignupMode = (mode === 'signup');
-            document.getElementById('tab-login-btn').classList.toggle('active', !isSignupMode);
-            document.getElementById('tab-signup-btn').classList.toggle('active', isSignupMode);
-            document.getElementById('signup-fields').classList.toggle('hidden', !isSignupMode);
-            document.getElementById('auth-submit-btn').innerText = isSignupMode ? 'Create Account' : 'Log In';
+        function openAuthModal(mode) {
+            setAuthModalMode(mode);
+            document.getElementById('auth-modal-overlay').classList.remove('hidden');
+        }
+        function closeAuthModal() {
+            document.getElementById('auth-modal-overlay').classList.add('hidden');
         }
 
-        function setRole(role) {
-            selectedRole = role;
-            document.getElementById('role-student').classList.toggle('selected', role === 'STUDENT');
-            document.getElementById('role-tutor').classList.toggle('selected', role === 'TUTOR');
+        function setAuthModalMode(mode) {
+            isSignupModal = (mode === 'signup');
+            document.getElementById('modal-tab-login').classList.toggle('active', !isSignupModal);
+            document.getElementById('modal-tab-signup').classList.toggle('active', isSignupModal);
+            document.getElementById('modal-signup-fields').classList.toggle('hidden', !isSignupModal);
+            document.getElementById('modal-title').innerText = isSignupModal ? 'Create PWC Account' : 'Log In to PWLink';
+            document.getElementById('modal-submit-btn').innerText = isSignupModal ? 'Sign Up' : 'Log In';
         }
 
-        async function handleAuthAction() {
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
+        async function executeAuth() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
 
             if (!email.endsWith('@pwc.edu.ph')) {
-                alert('Please use a valid PWC email address (@pwc.edu.ph)[cite: 1].');
+                alert('Please use a valid PWC email (@pwc.edu.ph)[cite: 1].');
                 return;
             }
 
-            if (isSignupMode) {
-                const name = document.getElementById('name').value.trim();
-                if (!name) { alert('Please enter your full name.'); return; }
+            if (isSignupModal) {
+                const name = document.getElementById('auth-name').value.trim();
+                const role = document.getElementById('auth-role').value;
+                if (!name) { alert('Please enter your name.'); return; }
 
-                const { error } = await supabaseClient.from('users').insert([{ name, email, password, role: selectedRole }]);
-                if (error) alert('Sign Up Error: ' + error.message);
-                else { alert('Account created successfully! You can now log in.'); switchAuthMode('login'); }
+                const { error } = await supabaseClient.from('users').insert([{ name, email, password, role }]);
+                if (error) alert('Error: ' + error.message);
+                else { alert('Account created successfully! You can now log in.'); setAuthModalMode('login'); }
             } else {
                 const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password).single();
                 if (error || !data) {
-                    alert('Invalid email or password.');
+                    alert('Invalid credentials.');
                 } else {
                     currentUser = data;
-                    // Transition to Dashboard
-                    document.getElementById('auth-section').classList.add('hidden');
-                    document.getElementById('dashboard-section').classList.remove('hidden');
-                    document.getElementById('user-header-info').classList.remove('hidden');
-                    document.getElementById('user-header-info').innerText = `${data.name} (${data.role})`;
-                    document.getElementById('welcome-msg').innerText = `Welcome back, ${data.name}!`;
+                    closeAuthModal();
+                    document.getElementById('header-auth-buttons').classList.add('hidden');
+                    const badge = document.getElementById('header-user-badge');
+                    badge.classList.remove('hidden');
+                    badge.innerText = `Hello, ${data.name} (${data.role})`;
+
+                    document.getElementById('hero-greeting-box').innerHTML = `
+                        <h1>Welcome back, ${data.name}!</h1>
+                        <p>Keep learning, keep growing. Find the right tutor and achieve your goals.</p>
+                    `;
                     loadTutors();
                 }
             }
         }
 
-        function switchTab(tabName) {
-            ['home', 'subjects', 'tutors'].forEach(t => {
-                document.getElementById(`tab-${t}`).classList.add('hidden');
-            });
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-
-            // Update nav buttons
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
         async function loadTutors() {
             const { data, error } = await supabaseClient.from('users').select('*').eq('role', 'TUTOR');
-            const container = document.getElementById('tutors-list');
+            const container = document.getElementById('featured-tutors-container');
             if (error || !data || data.length === 0) {
-                container.innerHTML = '<p>No tutors available yet. Try signing up a second account as a Tutor!</p>';
+                container.innerHTML = '<p>No tutors registered yet. Create a tutor account to test!</p>';
                 return;
             }
             container.innerHTML = data.map(tutor => `
-                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
-                    <strong>${tutor.name}</strong><br>
-                    <span style="font-size: 13px; color: #ffcc00;">${tutor.email}</span><br>
-                    <button class="btn-primary" style="padding: 6px 12px; font-size: 12px; margin-top: 8px;" onclick="alert('Booking request sent to ${tutor.name}!')">Book Session</button>
+                <div class="tutor-card">
+                    <div class="avatar-circle">${tutor.name.charAt(0)}</div>
+                    <h3 style="margin: 0 0 5px 0; color: var(--maroon);">${tutor.name}</h3>
+                    <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">${tutor.email}</p>
+                    <div>
+                        <span class="badge-tag">PWC Peer Tutor</span>
+                        <span class="badge-tag">Verified</span>
+                    </div>
+                    <button class="btn-primary-maroon" style="width: 100%; margin-top: 15px; padding: 8px; font-size: 13px;" onclick="alert('Booking request sent to ${tutor.name}!')">Book Session</button>
                 </div>
             `).join('');
         }
 
-        function logout() { location.reload(); }
+        function switchPageView(view) {
+            if (view === 'tutors') {
+                loadTutors();
+            } else if (view === 'subjects') {
+                alert('Browsing Subject categories: IT, Business, Accountancy, Math, and more[cite: 1]!');
+            }
+        }
+
+        // Initial load of featured tutors
+        loadTutors();
     </script>
 </body>
 </html>
