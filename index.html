@@ -48,6 +48,8 @@
         
         .btn-primary-maroon { background: var(--maroon); color: white; padding: 10px 24px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
         .btn-primary-maroon:hover { background: var(--dark-maroon); }
+        .btn-danger { background: #d9534f; color: white; padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; }
+        .btn-secondary { background: #6c757d; color: white; padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; }
 
         .section-title { font-size: 20px; font-weight: bold; color: #222; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
         
@@ -180,7 +182,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Management Action</th>
+                            <th>Management Actions</th>
                         </tr>
                     </thead>
                     <tbody id="admin-users-table">
@@ -304,7 +306,6 @@
 
             if (currentUser.role === 'ADMIN') {
                 document.getElementById('nav-admin').classList.remove('hidden');
-                // Automatically route admin directly to their dedicated management tab
                 switchTab('admin');
                 loadAdminUsers();
             } else if (currentUser.role === 'TUTOR') {
@@ -317,11 +318,12 @@
                             <p><strong>Status:</strong> Active & Visible to Students</p>
                         </div>
                         <div class="card">
-                            <h3>Incoming Student Requests</h3>
-                            <p style="color: #666;">No pending session bookings right now. Share your profile with classmates!</p>
+                            <h3>Incoming Student Bookings</h3>
+                            <div id="tutor-requests-list"><p>Loading booking requests...</p></div>
                         </div>
                     </div>
                 `;
+                loadTutorBookings();
             } else {
                 roleDashboard.innerHTML = `
                     <div class="section-title">Student Learning Dashboard</div>
@@ -333,7 +335,7 @@
                         </div>
                         <div class="card">
                             <h3>My Booked Sessions</h3>
-                            <p style="color: #666;">You have no active tutoring appointments scheduled.</p>
+                            <p style="color: #666;">You can book sessions by visiting the "Find a Tutor" tab.</p>
                         </div>
                     </div>
                 `;
@@ -366,7 +368,40 @@
                     <h3 style="margin-bottom: 5px;">${tutor.name}</h3>
                     <p style="font-size: 13px; color: #666; margin: 0 0 15px 0;">${tutor.email}</p>
                     <span style="background: #fdf5e6; color: var(--maroon); padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold;">PWC Peer Tutor</span>
-                    <button class="btn-primary-maroon" style="width: 100%; margin-top: 15px; padding: 8px; font-size: 13px;" onclick="alert('Booking request sent to ${tutor.name}!')">Book Session</button>
+                    ${currentUser && currentUser.role === 'STUDENT' ? `<button class="btn-primary-maroon" style="width: 100%; margin-top: 15px; padding: 8px; font-size: 13px;" onclick="bookTutor('${tutor.id}', '${tutor.name}')">Book Session</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function bookTutor(tutorId, tutorName) {
+            if (!currentUser) { alert('Please log in as a student to book a session.'); return; }
+            
+            const { error } = await supabaseClient.from('bookings').insert([{
+                tutor_id: tutorId,
+                student_name: currentUser.name,
+                student_email: currentUser.email,
+                status: 'Pending'
+            }]);
+
+            if (error) {
+                alert('Booking failed. Note: Ensure you created a "bookings" table in Supabase with columns: tutor_id, student_name, student_email, status.');
+            } else {
+                alert(`Booking request successfully sent to tutor ${tutorName}!`);
+            }
+        }
+
+        async function loadTutorBookings() {
+            const { data, error } = await supabaseClient.from('bookings').select('*').eq('tutor_id', currentUser.id);
+            const container = document.getElementById('tutor-requests-list');
+            if (error || !data || data.length === 0) {
+                container.innerHTML = '<p style="color: #666;">No pending session bookings right now.</p>';
+                return;
+            }
+            container.innerHTML = data.map(b => `
+                <div style="background: #f8f5f0; padding: 10px; border-radius: 8px; margin-top: 8px; border-left: 4px solid var(--maroon);">
+                    <strong>${b.student_name}</strong><br>
+                    <span style="font-size: 12px; color: #555;">${b.student_email}</span><br>
+                    <span style="font-size: 11px; color: var(--yellow); background: var(--maroon); padding: 2px 6px; border-radius: 4px;">Status: ${b.status}</span>
                 </div>
             `).join('');
         }
@@ -383,9 +418,34 @@
                     <td><strong>${u.name}</strong></td>
                     <td>${u.email}</td>
                     <td><span style="background: #fdf5e6; padding: 3px 8px; border-radius: 6px; color: var(--maroon); font-weight: bold;">${u.role}</span></td>
-                    <td><button class="btn-primary-maroon" style="padding: 4px 12px; font-size: 12px;" onclick="alert('Managing account settings for ${u.name}')">Edit Account</button></td>
+                    <td>
+                        <button class="btn-secondary" onclick="editUserRole('${u.id}', '${u.name}', '${u.role}')">Change Role</button>
+                        <button class="btn-danger" onclick="deleteUser('${u.id}', '${u.name}')">Delete</button>
+                    </td>
                 </tr>
             `).join('');
+        }
+
+        async function editUserRole(userId, userName, currentRole) {
+            const newRole = prompt(`Change role for ${userName} (STUDENT, TUTOR, or ADMIN):`, currentRole);
+            if (!newRole) return;
+            const upperRole = newRole.trim().toUpperCase();
+            if (!['STUDENT', 'TUTOR', 'ADMIN'].includes(upperRole)) {
+                alert('Invalid role! Please choose STUDENT, TUTOR, or ADMIN.');
+                return;
+            }
+
+            const { error } = await supabaseClient.from('users').update({ role: upperRole }).eq('id', userId);
+            if (error) alert('Error updating role: ' + error.message);
+            else { alert('User role updated successfully!'); loadAdminUsers(); }
+        }
+
+        async function deleteUser(userId, userName) {
+            if (!confirm(`Are you sure you want to delete account: ${userName}?`)) return;
+
+            const { error } = await supabaseClient.from('users').delete().eq('id', userId);
+            if (error) alert('Error deleting user: ' + error.message);
+            else { alert('User deleted successfully.'); loadAdminUsers(); }
         }
 
         function logout() {
