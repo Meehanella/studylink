@@ -4,48 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyLink | PWC Tutoring Portal</title>
-    <!-- Supabase JS Library CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #800000, #4a0000);
-            color: #ffffff;
-            min-height: 100vh;
-        }
-        .bg-animation {
-            position: fixed;
-            top: 0; left: 0; width: 200%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80') repeat-x;
-            opacity: 0.15;
-            z-index: -1;
-            animation: slideBg 50s linear infinite;
-        }
-        @keyframes slideBg {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #800000, #4a0000); color: #ffffff; min-height: 100vh;
         }
         header {
-            background-color: #600000;
-            border-bottom: 4px solid #ffcc00;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: #600000; border-bottom: 4px solid #ffcc00;
+            padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
         }
         .logo { font-size: 22px; font-weight: bold; color: #ffcc00; }
         .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            max-width: 800px; margin: 30px auto; background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); padding: 25px; border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
-        h2 { color: #ffcc00; text-align: center; border-bottom: 2px solid #ffcc00; padding-bottom: 8px; }
+        h2 { color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 8px; margin-top: 0; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; color: #ffcc00; font-weight: bold; }
         input, select {
@@ -54,26 +29,35 @@
         }
         .btn {
             background-color: #ffcc00; color: #600000; font-weight: bold;
-            width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer;
-            margin-top: 10px; transition: 0.3s;
+            padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
         }
         .btn:hover { background-color: #e6b800; }
+        .danger-btn { background-color: #d9534f; color: white; }
         .hidden { display: none; }
-        .dashboard { max-width: 800px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #ffcc00; }
+        nav button { background: transparent; border: none; color: white; font-weight: bold; cursor: pointer; margin-left: 15px; font-size: 14px; }
+        nav button:hover { color: #ffcc00; }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
     <header>
         <div class="logo">StudyLink - PWC</div>
-        <div id="user-info" class="hidden">Welcome, <span id="username-display"></span></div>
+        <nav id="nav-bar" class="hidden">
+            <span id="user-welcome" style="margin-right: 15px; color: #ffcc00;"></span>
+            <button onclick="switchTab('dashboard')">Dashboard</button>
+            <button onclick="switchTab('tutors')">Browse Tutors</button>
+            <button onclick="switchTab('sessions')">My Sessions</button>
+            <button onclick="switchTab('profile')">Profile</button>
+            <button class="danger-btn" onclick="logout()" style="padding: 5px 10px; border-radius: 4px;">Log Out</button>
+        </nav>
     </header>
 
-    <!-- AUTH SECTION (Login / Sign Up) -->
-    <div id="auth-container" class="container">
-        <h2>StudyLink PWC Portal</h2>
+    <!-- AUTH SECTION -->
+    <div id="auth-container" class="container" style="max-width: 450px;">
+        <h2 id="auth-heading">StudyLink Portal</h2>
         <div class="form-group">
-            <label>Email (@pwc.edu.ph)</label>
+            <label>PWC Email</label>
             <input type="email" id="email" placeholder="student@pwc.edu.ph">
         </div>
         <div class="form-group">
@@ -93,32 +77,74 @@
                 </select>
             </div>
         </div>
-        <button class="btn" id="main-btn" onclick="handleAuth()">Log In</button>
+        <button class="btn" id="main-auth-btn" onclick="handleAuth()" style="width: 100%;">Log In</button>
         <p style="text-align: center; margin-top: 15px; cursor: pointer; color: #ffcc00;" onclick="toggleMode()">
             <span id="toggle-text">Don't have an account? Sign Up</span>
         </p>
     </div>
 
-    <!-- DASHBOARD SECTION (Hidden until login) -->
-    <div id="dashboard-container" class="container dashboard hidden">
-        <h2 id="dash-title">Student Dashboard</h2>
-        <p>You are successfully logged into StudyLink connected to Supabase!</p>
-        <button class="btn" style="background-color: #d9534f; color: white;" onclick="logout()">Log Out</button>
+    <!-- MAIN APP DASHBOARD WRAPPER -->
+    <div id="app-container" class="hidden">
+        
+        <!-- DASHBOARD TAB -->
+        <div id="tab-dashboard" class="container">
+            <h2 id="dash-title">Dashboard</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Upcoming Sessions</h3>
+                    <p id="stat-upcoming">0 sessions scheduled</p>
+                </div>
+                <div class="card">
+                    <h3>Completed Progress</h3>
+                    <p id="stat-completed">0 hours completed</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BROWSE TUTORS TAB -->
+        <div id="tab-tutors" class="container hidden">
+            <h2>Browse Available Tutors</h2>
+            <div id="tutors-list">Loading tutors...</div>
+        </div>
+
+        <!-- SESSIONS TAB -->
+        <div id="tab-sessions" class="container hidden">
+            <h2>Your Tutoring Sessions</h2>
+            <div id="sessions-list">No sessions booked yet.</div>
+        </div>
+
+        <!-- PROFILE TAB -->
+        <div id="tab-profile" class="container" style="display: none;">
+            <h2>Manage Profile</h2>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="profile-name">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="text" id="profile-email" disabled style="opacity: 0.7;">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <input type="text" id="profile-role" disabled style="opacity: 0.7;">
+            </div>
+            <button class="btn" onclick="updateProfile()">Save Changes</button>
+        </div>
+
     </div>
 
     <script>
-        // REPLACE WITH YOUR ACTUAL SUPABASE URL AND ANON KEY
-        // YOUR ACTUAL SUPABASE CONFIGURATION
         const SUPABASE_URL = 'https://qihryxvenaozhaqswzxy.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHJ5eHZlbmFvemhhcXN3enh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTY2MTEsImV4cCI6MjEwNTczMjYxMX0.YgPQOuuB6X9L-JN0XYye6Iqs2VLQhHSDF1-hZwG0Zek';
         
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let currentUser = null;
         let isSignup = false;
 
         function toggleMode() {
             isSignup = !isSignup;
             document.getElementById('signup-fields').classList.toggle('hidden', !isSignup);
-            document.getElementById('main-btn').innerText = isSignup ? 'Sign Up' : 'Log In';
+            document.getElementById('main-auth-btn').innerText = isSignup ? 'Sign Up' : 'Log In';
             document.getElementById('toggle-text').innerText = isSignup ? 'Already have an account? Log In' : "Don't have an account? Sign Up";
         }
 
@@ -127,49 +153,63 @@
             const password = document.getElementById('password').value;
 
             if (!email.endsWith('@pwc.edu.ph')) {
-                alert('Please use a valid PWC email address (@pwc.edu.ph)');
+                alert('Please use a valid PWC email (@pwc.edu.ph)');
                 return;
             }
 
             if (isSignup) {
                 const name = document.getElementById('name').value;
                 const role = document.getElementById('role').value;
-
-                const { data, error } = await supabaseClient
-                    .from('users')
-                    .insert([{ name, email, password, role }]);
-
-                if (error) {
-                    alert('Signup Error: ' + error.message);
-                } else {
-                    alert('Account created successfully! You can now log in.');
-                    toggleMode();
-                }
+                const { error } = await supabaseClient.from('users').insert([{ name, email, password, role }]);
+                if (error) alert('Error: ' + error.message);
+                else { alert('Account created! You can now log in.'); toggleMode(); }
             } else {
-                // Login query check against Supabase users table
-                const { data, error } = await supabaseClient
-                    .from('users')
-                    .select('*')
-                    .eq('email', email)
-                    .eq('password', password)
-                    .single();
-
-                if (error || !data) {
-                    alert('Invalid email or password!');
-                } else {
-                    alert('Login successful!');
+                const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password).single();
+                if (error || !data) alert('Invalid credentials!');
+                else {
+                    currentUser = data;
                     document.getElementById('auth-container').classList.add('hidden');
-                    document.getElementById('dashboard-container').classList.remove('hidden');
-                    document.getElementById('user-info').classList.remove('hidden');
-                    document.getElementById('username-display').innerText = data.name;
-                    document.getElementById('dash-title').innerText = `${data.role} Dashboard: ${data.name}`;
+                    document.getElementById('app-container').classList.remove('hidden');
+                    document.getElementById('nav-bar').classList.remove('hidden');
+                    document.getElementById('user-welcome').innerText = `Hello, ${data.name}`;
+                    document.getElementById('dash-title').innerText = `${data.role} Dashboard`;
+                    document.getElementById('profile-name').value = data.name;
+                    document.getElementById('profile-email').value = data.email;
+                    document.getElementById('profile-role').value = data.role;
+                    loadTutors();
                 }
             }
         }
 
-        function logout() {
-            location.reload();
+        function switchTab(tabName) {
+            ['dashboard', 'tutors', 'sessions', 'profile'].forEach(t => {
+                document.getElementById(`tab-${t}`).style.display = (t === tabName) ? 'block' : 'none';
+            });
         }
+
+        async function loadTutors() {
+            const { data, error } = await supabaseClient.from('users').select('*').eq('role', 'TUTOR');
+            const container = document.getElementById('tutors-list');
+            if (error || !data || data.length === 0) {
+                container.innerHTML = '<p>No tutors available at the moment.</p>';
+                return;
+            }
+            container.innerHTML = data.map(tutor => `
+                <div class="card">
+                    <strong>${tutor.name}</strong> (${tutor.email})<br>
+                    <button class="btn" style="margin-top: 8px; padding: 5px 10px; font-size: 12px;" onclick="alert('Booking request sent to ${tutor.name}!')">Book Session</button>
+                </div>
+            `).join('');
+        }
+
+        async function updateProfile() {
+            const newName = document.getElementById('profile-name').value;
+            const { error } = await supabaseClient.from('users').update({ name: newName }).eq('id', currentUser.id);
+            if (error) alert('Update failed: ' + error.message);
+            else { alert('Profile updated successfully!'); currentUser.name = newName; document.getElementById('user-welcome').innerText = `Hello, ${newName}`; }
+        }
+
+        function logout() { location.reload(); }
     </script>
 </body>
 </html>
