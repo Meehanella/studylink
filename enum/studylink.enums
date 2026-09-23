@@ -1,9 +1,0 @@
-package studylink.enums;
-
-public enum UserRole {
-    STUDENT, TUTOR, ADMIN
-}
-
-public enum Status {
-    ACTIVE, PENDING, REJECTED, COMPLETED, INACTIVE
-}
