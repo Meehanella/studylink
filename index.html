@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyLink | PWC Tutoring Portal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #800000, #4a0000);
+            color: #ffffff;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 200%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80') repeat-x;
+            opacity: 0.15;
+            z-index: -1;
+            animation: slideBg 50s linear infinite;
+        }
+        @keyframes slideBg {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        header {
+            background-color: #600000;
+            border-bottom: 4px solid #ffcc00;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 22px; font-weight: bold; color: #ffcc00; }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h2 { color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 8px; }
+        .btn {
+            background-color: #ffcc00;
+            color: #600000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover { background-color: #e6b800; }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <header>
+        <div class="logo">StudyLink - PWC</div>
+        <div>Dashboard | Browse Tutors | Profile</div>
+    </header>
+    <div class="container">
+        <h2>Student Learning Dashboard</h2>
+        <p>Welcome, PWC Student! Manage your tutoring appointments here.</p>
+        <button class="btn">Book Tutoring Session</button>
+    </div>
+</body>
+</html>
